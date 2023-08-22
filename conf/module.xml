@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+
+	<!-- 관리자 액션 및 일반 액션을 정의한다. -->
+	<actions>
+		<action name="dispIndexnowAdminConfig" class="Controllers\Admin" admin-index="true" menu-name="indexnow" />
+		<action name="procIndexnowAdminInsertConfig" class="Controllers\Admin" />
+	</actions>
+
+	<!-- 기본 컨트롤러와 설치/업데이트 기능을 담당하는 클래스를 정의한다. 이 모듈에서는 둘 다 Base 클래스이다. -->
+	<classes>
+		<class type="default" name="Controllers\Base" />
+		<class type="install" name="Controllers\Base" />
+	</classes>
+
+	<!-- 이벤트 핸들러(트리거)는 여기에서 정의한다. -->
+	<eventHandlers>
+		<eventHandler after="document.insertDocument" class="Controllers\EventHandlers" method="afterInsertUpdateDocument" />
+		<eventHandler after="document.updateDocument" class="Controllers\EventHandlers" method="afterInsertUpdateDocument" />
+	</eventHandlers>
+
+	<!-- 관리자 메뉴 등 나머지 보일러플레이트 정의. -->
+	<menus>
+		<menu name="indexnow" type="all">
+			<title xml:lang="ko">IndexNow</title>
+			<title xml:lang="en">IndexNow</title>
+		</menu>
+	</menus>
+	<grants></grants>
+
+</module>

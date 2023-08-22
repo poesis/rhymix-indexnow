@@ -1,0 +1,71 @@
+<load target="css/config.scss" />
+<load target="js/config.js" />
+
+<div class="x_page-header">
+	<h1>{$lang->cmd_indexnow}</h1>
+</div>
+
+<ul class="x_nav x_nav-tabs">
+	<li class="x_active"|cond="$act == 'dispIndexnowAdminConfig'"><a href="{getUrl('', 'module', 'admin', 'act', 'dispIndexnowAdminConfig')}">{$lang->cmd_indexnow_general_config}</a></li>
+</ul>
+
+<!--@if(!defined('RX_VERSION') || version_compare(RX_VERSION, '2.1.3', '<'))-->
+	<div class="message error">
+		<p>{$lang->msg_indexnow_rhymix_version}</p>
+	</div>
+<!--@endif-->
+
+<form class="x_form-horizontal" action="./" method="post" id="indexnow">
+	<input type="hidden" name="module" value="indexnow" />
+	<input type="hidden" name="act" value="procIndexnowAdminInsertConfig" />
+	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+	<input type="hidden" name="xe_validator_id" value="modules/indexnow/views/admin/config/1" />
+
+	<div class="message {$XE_VALIDATOR_MESSAGE_TYPE}" cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/indexnow/tpl/config/1'">
+		<p>{$XE_VALIDATOR_MESSAGE}</p>
+	</div>
+
+	<section class="section">
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->cmd_indexnow_use_module}</label>
+			<div class="x_controls">
+				<label for="use_module_Y" class="x_inline">
+					<input type="radio" id="use_module_Y" name="use_module" value="Y" checked="checked"|cond="isset($config->use_module) && $config->use_module" />
+					{$lang->cmd_yes}
+				</label>
+				<label for="use_module_N" class="x_inline">
+					<input type="radio" id="use_module_N" name="use_module" value="N" checked="checked"|cond="!isset($config->use_module) || !$config->use_module" />
+					{$lang->cmd_no}
+				</label>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->cmd_indexnow_search_engines}</label>
+			<div class="x_controls">
+				<!--@foreach(\Rhymix\Modules\IndexNow\Models\SearchEngines::URLS as $name => $url)-->
+					{@ $default_enabled = in_array($name, \Rhymix\Modules\IndexNow\Models\SearchEngines::DEFAULT_ENABLED)}
+					<label for="search_engines_{$name}" class="x_inline">
+						<input type="checkbox" id="search_engines_{$name}" name="search_engines[]" value="{$name}" checked="checked"|cond="isset($config->search_engines[$name]) || (!isset($config->search_engines) && $default_enabled)" />
+						{lang('indexnow.cmd_indexnow_' . $name)}
+					</label>
+				<!--@endforeach-->
+			</div>
+		</div>
+	</section>
+
+	<div class="message">
+		<p>{sprintf($lang->msg_indexnow_create_keyfile, $keyfile_url, $config->key)}</p>
+		<!--@if($keyfile_exists && $keyfile_content_check)-->
+			<p class="ok">{$lang->msg_indexnow_keyfile_ok}</p>
+		<!--@elseif($keyfile_exists)-->
+			<p class="error">{$lang->msg_indexnow_keyfile_mismatch}</p>
+		<!--@else-->
+			<p class="error">{$lang->msg_indexnow_keyfile_not_found}</p>
+		<!--@endif-->
+	</div>
+
+	<div class="btnArea x_clearfix">
+		<button type="submit" class="x_btn x_btn-primary x_pull-right">{$lang->cmd_registration}</button>
+	</div>
+
+</form>

@@ -1,0 +1,17 @@
+.message {
+	.code {
+		display: inline-block;
+		font-family: Consolas, monospace;
+		padding: 0 4px;
+		margin: 2px 0 0 4px;
+		background: #FFFFFF;
+		border: 1px solid #DDDDDD;
+		border-radius: 2px;
+	}
+	.ok {
+		color: #43A047;
+	}
+	.error {
+		color: #E53935;
+	}
+}

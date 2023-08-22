@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">IndexNow</title>
+	<description xml:lang="ko">indexnow 프로토콜을 사용하여 검색엔진에 새 글을 등록 요청합니다.</description>
+	<version>1.0.0</version>
+	<date>2023-08-22</date>
+	<category>service</category>
+	<author email_address="kijin@poesis.org" link="https://www.poesis.org">
+		<name xml:lang="ko">POESIS</name>
+	</author>
+</module>
