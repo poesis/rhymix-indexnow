@@ -57,6 +57,14 @@ class EventHandlers extends Base
 				'document_srl' => $obj->document_srl,
 			]),
 		];
+
+		// 라이믹스가 루트에 설치되지 않은 경우, keyLocation 파라미터를 추가한다.
+		if (\RX_BASEURL !== '/')
+		{
+			$params['keyLocation'] = getFullUrl('') . $config->key . '.txt';
+		}
+
+		// 한 번에 묶어서 전송할 요청들을 생성한다.
 		foreach ($config->search_engines as $name => $unused)
 		{
 			$requests[] = [
