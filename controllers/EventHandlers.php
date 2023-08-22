@@ -40,7 +40,8 @@ class EventHandlers extends Base
 			return;
 		}
 
-		// 설정 상태를 확인한다.
+		// 모듈 설정 상태를 확인한다.
+		// 사용하지 않도록 되어 있거나, 선택한 검색엔진이 없다면 리턴한다.
 		$config = ConfigModel::getConfig();
 		if (!isset($config->use_module) || !$config->use_module || !count($config->search_engines))
 		{
@@ -65,6 +66,8 @@ class EventHandlers extends Base
 		}
 
 		// 선택한 검색엔진에 IndexNow 요청을 전송한다.
+		// 여러 검색엔진에 순차적으로 요청하느라 시간이 오래 걸리지 않도록
+		// HTTP::multiple() 기능을 사용하여 동시에 전송한다.
 		try
 		{
 			HTTP::multiple($requests);
