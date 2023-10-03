@@ -48,6 +48,16 @@ class EventHandlers extends Base
 			return;
 		}
 
+		// 로봇이 접근할 수 없는 게시판이라면 리턴한다.
+		$module_grants = ModuleModel::getModuleGrants($obj->module_srl)->data ?? [];
+		foreach ($module_grants as $grant)
+		{
+			if (in_array($grant->name, ['access', 'view']) && $grant->group_srl != 0)
+			{
+				return;
+			}
+		}
+
 		// 요청 파라미터를 생성한다.
 		$requests = [];
 		$params = [
