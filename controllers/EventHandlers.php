@@ -58,6 +58,13 @@ class EventHandlers extends Base
 			}
 		}
 
+		// 상담 게시판이라면 리턴한다.
+		$module_info = ModuleModel::getModuleInfoByModuleSrl($obj->module_srl) ?? new \stdClass;
+		if (isset($module_info->consultation) && $module_info->consultation === 'Y')
+		{
+			return;
+		}
+
 		// 요청 파라미터를 생성한다.
 		$requests = [];
 		$params = [
